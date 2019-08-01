@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -15,6 +16,11 @@ if (process.env.NODE_ENV === "production") {
 
 // Send every other request to the React app
 // Define any API routes before this runs
+
+// Connecting to Mondo DB
+mongoose.connect(process.env.MONGOD_URI || "mongodb://localhost/googlebooks")
+
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
